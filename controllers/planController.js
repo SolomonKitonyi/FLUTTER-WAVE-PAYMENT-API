@@ -44,3 +44,20 @@ exports.getPaymentPlan = async (req, res) => {
 		return res.status(400).json({ error: error.message });
 	}
 };
+
+//get paymentPlans => /ap1/v1/payment-plans
+exports.getPaymentPlans = async (req, res) => {
+	try {
+		const response = await axios({
+			method: 'GET',
+			url: baseUrl,
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${process.env.FLUTTER_SECRET_KEY}`,
+			},
+		});
+		return res.status(200).json({ plans: response.data });
+	} catch (error) {
+		return res.status(400).json({ error: error.message });
+	}
+};
