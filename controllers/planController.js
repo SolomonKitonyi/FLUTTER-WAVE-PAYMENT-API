@@ -61,3 +61,26 @@ exports.getPaymentPlans = async (req, res) => {
 		return res.status(400).json({ error: error.message });
 	}
 };
+
+//update plan => /api/v1/update-plan/:id
+exports.updatePlan = async (req, res) => {
+	let options = {
+		method: 'PUT',
+		url: `${baseUrl}/${req.params.id}`,
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: `Bearer ${process.env.FLUTTER_SECRET_KEY}`,
+		},
+		body: JSON.stringify({ name: req.body.name, status: req.body.status }),
+	};
+	try {
+		const response = await axios(options);
+		return res.status(200).json({
+			response: response.data,
+		});
+	} catch (error) {
+		return res.status(400).json({
+			error: error.message,
+		});
+	}
+};
