@@ -84,3 +84,25 @@ exports.updatePlan = async (req, res) => {
 		});
 	}
 };
+
+//cancel plan => /api/v1/cancel-plan/cancel/:id
+exports.cancelPlan = async (req, res) => {
+	let options = {
+		method: 'PUT',
+		url: `${baseUrl}/${req.params.id}/cancel`,
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: `Bearer ${process.env.FLUTTER_SECRET_KEY}`,
+		},
+	};
+	try {
+		const response = await axios(options);
+		return res.status(200).json({
+			response: response.data,
+		});
+	} catch (error) {
+		return res.status(400).json({
+			error: error.message,
+		});
+	}
+};
