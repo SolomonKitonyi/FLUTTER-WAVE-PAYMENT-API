@@ -27,3 +27,20 @@ exports.createPlan = async (req, res) => {
 		});
 	}
 };
+
+//get paymentPlan => /ap1/v1/payment-plans/:id
+exports.getPaymentPlan = async (req, res) => {
+	try {
+		const response = await axios({
+			method: 'GET',
+			url: `${baseUrl}/${req.params.id}`,
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${process.env.FLUTTER_SECRET_KEY}`,
+			},
+		});
+		return res.status(200).json({ plan: response.data });
+	} catch (error) {
+		return res.status(400).json({ error: error.message });
+	}
+};
